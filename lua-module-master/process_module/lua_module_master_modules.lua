@@ -25,18 +25,7 @@ local modules = {
 }
 ]]
 
-local hello_header_module = {
-    filename      = "modules.hello_header_module.hello_header",
-    init          = nil,
-    init_worker   = nil,
-    rewrite       = nil,
-    access        = nil,
-    content       = nil,
-    header_filter = "hello_header_header_filter_handle",
-    body_filter   = nil,
-    log           = nil,
-    balancer      = nil,
-}
+
 
 local hello_body_module = {
     filename      = "modules.hello_body_module.hello_body",
@@ -53,7 +42,6 @@ local hello_body_module = {
 
 
 local modules = {
-    ["hello_header"]   = hello_header_module,
     ["hello_body"]     = hello_body_module,
 }
 
