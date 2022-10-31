@@ -1,8 +1,13 @@
 #!/bin/bash
 
-PCRE=pcre-8.39
-ZLIB=zlib-1.2.8
-OPENSSL=openssl-1.0.2j
+PCRE=pcre-8.44
+ZLIB=zlib-1.2.11
+OPENSSL=openssl-1.1.1k
+JOBS=8
+
+# wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz
+# wget http://zlib.net/zlib-1.2.11.tar.gz
+# wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz
 
 rm -rf objs || exit 1
 mkdir -p objs/lib || exit 1
@@ -14,7 +19,10 @@ tar -xf ../../../$PCRE.tar.gz || exit 1
 cd ../..
 
 cd objs/lib/$OPENSSL || exit 1
-patch -p1 < ../../../patches/openssl-1.0.2h-sess_set_get_cb_yield.patch || exit 1
+#patch -p1 < ../../../patches/openssl-1.1.0j-parallel_build_fix.patch || exit 1
+patch -p1 < ../../../patches/openssl-1.1.1f-sess_set_get_cb_yield.patch || exit 1
+#patch -p1 < ../../../patches/openssl-1.1.1d-win_fix.patch || exit 1
+#patch -p1 < ../../../patches/openssl-1.1.1e-sess_set_get_cb_yield.patch || exit 1
 cd ../../..
 
     #--with-openssl-opt="no-asm" \
@@ -32,6 +40,7 @@ cd ../../..
     --with-ipv6 \
     --with-stream \
     --with-stream_ssl_module \
+    --with-stream_ssl_preread_module \
     --with-http_v2_module \
     --without-mail_pop3_module \
     --without-mail_imap_module \
@@ -53,7 +62,7 @@ cd ../../..
     --with-pcre=objs/lib/$PCRE \
     --with-zlib=objs/lib/$ZLIB \
     --with-openssl=objs/lib/$OPENSSL \
-    -j5 || exit 1
-#gmake -j5
-make || exit 1
-make install
+    -j$JOBS || exit 1
+
+make -j$JOBS || exit 1
+exec make install
