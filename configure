@@ -9,8 +9,8 @@
 #添加模块请修改此处
 MODULES="--without-http_redis2_module \
     --with-http_iconv_module \
-    --with-luajit" \
-    "--with-http_slice_module"
+    --with-luajit \
+    --with-http_slice_module"
 
 PREFIX=
 opt=
