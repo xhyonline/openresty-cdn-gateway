@@ -6,6 +6,7 @@ local b64 = require("ngx.base64")
 local ocsp = require "ngx.ocsp"
 local sni, err = ssl.server_name()
 local cache = ngx.shared.cache
+local ngx = ngx
 if not sni then
     ngx.log(ngx.ERR, "no SNI fond: ", err)
     ngx.exit(ngx.ERROR)
@@ -19,9 +20,16 @@ local res, err = httpc:request_uri(address, {
 })
 if err then
     ngx.log(ngx.ERR, "出错了:", err)
+    ngx.exit(ngx.ERROR)
 end
 local body = res.body
 res = cjson.decode(body);
+
+if not res.key or res.key == "" then
+    -- 没有证书
+    return
+end
+
 if res.key and res.key ~= "" then
     -- 清除之前的公钥和私钥
     local ok, err = ssl.clear_certs()
@@ -94,7 +102,7 @@ if res.key and res.key ~= "" then
             ngx.log(ngx.ERR, err)
             return
         end
-        ngx.log(ngx.ERR,"许弘毅调试,复用ocsp")
+        ngx.log(ngx.ERR, "许弘毅调试,复用ocsp")
     end
     ok, err = ocsp.set_ocsp_status_resp(ocsp_resp)
     if not ok then
