@@ -15,8 +15,7 @@ local ngx      = ngx;
     > Created Time: 2016年 12月 07日 星期三
     > function: 设定响应内容
 **************************************************************************]]
-function _M.hello_body_content_handle(conf)
-
+function _M.hello_body_access_handle(conf)
     if type(conf) ~= "table" then
         ngx.log(ngx.ERR,"log format: no config");
         return;
@@ -28,7 +27,7 @@ function _M.hello_body_content_handle(conf)
 
     txt = txt.." from "..conf.from;
 
-    ngx.say(txt);
+    ngx.log(ngx.INFO, txt);
 
     return;
 

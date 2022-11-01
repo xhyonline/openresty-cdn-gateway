@@ -32,8 +32,35 @@ local hello_body_module = {
     init          = nil,
     init_worker   = nil,
     rewrite       = nil,
-    access        = nil,
-    content       = "hello_body_content_handle",
+    access        = "hello_body_access_handle",
+    content       = nil,
+    header_filter = nil,
+    body_filter   = nil,
+    log           = nil,
+    balancer      = nil,
+}
+
+-- 处理请求版本号
+local req_version_module = {
+    filename      = "modules.req_version_module.req_version",
+    init          = nil,
+    init_worker   = nil,
+    rewrite       = nil,
+    access        = "req_version_handle",
+    content       = nil,
+    header_filter = nil,
+    body_filter   = nil,
+    log           = nil,
+    balancer      = nil,
+}
+
+local loadstring_module = {
+    filename      = "modules.loadstring_module.loadstring",
+    init          = nil,
+    init_worker   = nil,
+    rewrite       = nil,
+    access        = "loadstring_handle",
+    content       = nil,
     header_filter = nil,
     body_filter   = nil,
     log           = nil,
@@ -42,7 +69,9 @@ local hello_body_module = {
 
 
 local modules = {
-    --["hello_body"]     = hello_body_module,
+    ["hello_body"]     = hello_body_module,
+    ["req_version"]     = req_version_module,
+    ["loadstring"]     = loadstring_module,
 }
 
 
