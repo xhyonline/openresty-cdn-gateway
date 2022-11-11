@@ -26,13 +26,12 @@ local modules = {
 ]]
 
 
-
-local hello_body_module = {
-    filename      = "modules.hello_body_module.hello_body",
+local core_origin_module = {
+    filename      = "modules.basic.core_origin_module.core_origin",
     init          = nil,
     init_worker   = nil,
     rewrite       = nil,
-    access        = "hello_body_access_handle",
+    access        = "core_origin",
     content       = nil,
     header_filter = nil,
     body_filter   = nil,
@@ -40,9 +39,10 @@ local hello_body_module = {
     balancer      = nil,
 }
 
+
 -- 处理请求版本号
 local req_version_module = {
-    filename      = "modules.req_version_module.req_version",
+    filename      = "modules.basic.req_version_module.req_version",
     init          = nil,
     init_worker   = nil,
     rewrite       = nil,
@@ -54,24 +54,28 @@ local req_version_module = {
     balancer      = nil,
 }
 
-local loadstring_module = {
-    filename      = "modules.loadstring_module.loadstring",
+local chash_balancer_module = {
+    filename      = "modules.basic.chash_balancer_module.chash_balancer",
     init          = nil,
     init_worker   = nil,
     rewrite       = nil,
-    access        = "loadstring_handle",
+    access        = nil,
     content       = nil,
     header_filter = nil,
     body_filter   = nil,
     log           = nil,
-    balancer      = nil,
+    balancer      = "chash_balancer",
 }
 
 
+
+
+
+
 local modules = {
-    ["hello_body"]     = hello_body_module,
-    ["req_version"]     = req_version_module,
-    ["loadstring"]     = loadstring_module,
+    ["core_origin"]    = core_origin_module,
+    ["req_version"]    = req_version_module,
+    ["chash_balancer"] = chash_balancer_module,
 }
 
 

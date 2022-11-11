@@ -1,8 +1,8 @@
+-- 用于刷新中央
 local _M = { _VERSION = '0.01' }
 local ngx = ngx;
 local cjson = require("cjson")
 local http = require("resty.http")
-
 function _M.req_version_handle(conf)
     local httpc = http.new()
     local address = "http://127.0.0.1:8787/getVersion"
